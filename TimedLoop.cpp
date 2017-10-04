@@ -42,6 +42,18 @@ void TimedLoop::SetupMillis(uint32_t loopTime){
   Setup(loopTime * 1000);
 }
 
+void TimedLoop::SetupFrequency(float frequency, const char* loopName, bool debugEnabled)}
+  Setup(1000000/frequency, loopName, debugEnabled);
+}
+
+void TimedLoop::SetupFrequency(float frequency, const char* loopName)}
+  Setup(1000000/frequency, loopName);
+}
+
+void TimedLoop::SetupFrequency(float frequency)}
+  Setup(1000000/frequency);
+}
+
 bool TimedLoop::Iterate()
 {
   uint32_t loopIntervals = 0;

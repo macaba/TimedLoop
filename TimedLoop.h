@@ -20,6 +20,9 @@ class TimedLoop {
     void SetupMillis(uint32_t loopTime);
     void SetupMillis(uint32_t loopTime, const char* loopName);
     void SetupMillis(uint32_t loopTime, const char* loopName, bool debugEnabled);
+	void SetupFrequency(float frequency);
+	void SetupFrequency(float frequency, const char* loopName);
+	void SetupFrequency(float frequency, const char* loopName, bool debugEnabled);
 
     bool Iterate();
     bool Iterate(bool optionalOverrideCondition);
