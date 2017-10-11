@@ -10,6 +10,7 @@ class TimedLoop {
     uint32_t time;
     const char* name;
     bool debug;
+	void (*_debugCallback)(char *);
   public:
     void Setup(uint32_t loopTimeMicros);
     void Setup(uint32_t loopTimeMicros, const char* loopName);
@@ -23,9 +24,12 @@ class TimedLoop {
 	void SetupFrequency(float frequency);
 	void SetupFrequency(float frequency, const char* loopName);
 	void SetupFrequency(float frequency, const char* loopName, bool debugEnabled);
+	
+	void SetDebugCallback(void (*)(char *));
 
     bool Iterate();
-    bool Iterate(bool optionalOverrideCondition);
+    bool IterateWithOverride(bool optionalOverrideCondition);
+	bool IterateWithIgnore(bool optionalIgnoreCondition);
 };
 
 #endif

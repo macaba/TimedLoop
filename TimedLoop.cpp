@@ -54,6 +54,10 @@ void TimedLoop::SetupFrequency(float frequency){
   Setup(1000000/frequency);
 }
 
+void TimedLoop::SetDebugCallback(void (*debugCallback)(char *)){
+  _debugCallback = debugCallback;
+}
+
 bool TimedLoop::Iterate()
 {
   uint32_t loopIntervals = 0;
@@ -62,17 +66,26 @@ bool TimedLoop::Iterate()
     loopIntervals++;
   }
   if((loopIntervals > 1) && debug) { 
-    Serial.print("Warning: Lost loop iteration(s), Loop name: ");
-    Serial.print(name);
-    Serial.print(", Iterations lost: ");
-    Serial.println(loopIntervals - 1);
+	if(_debugCallback){
+		_debugCallback((char*)printf("Warning: Lost loop iteration(s), Loop name: %s, Iterations lost: %i\n", name, (int)loopIntervals - 1));
+	}
+	else{
+      Serial.printf("Warning: Lost loop iteration(s), Loop name: %s, Iterations lost: %i\n", name, (int)loopIntervals - 1);
+	}
   }
   return (loopIntervals > 0);
 }
 
-bool TimedLoop::Iterate(bool optionalOverrideCondition){
+bool TimedLoop::IterateWithOverride(bool optionalOverrideCondition){
   if(optionalOverrideCondition)
     return true;
+  else
+    return Iterate();
+}
+
+bool TimedLoop::IterateWithIgnore(bool optionalIgnoreCondition){
+  if(optionalIgnoreCondition)
+    return false;
   else
     return Iterate();
 }
