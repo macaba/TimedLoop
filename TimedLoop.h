@@ -12,9 +12,6 @@ class TimedLoop {
     bool debug;
 	void (*_debugCallback)(char *);
   public:
-    void Setup(uint32_t loopTimeMicros);
-    void Setup(uint32_t loopTimeMicros, const char* loopName);
-    void Setup(uint32_t loopTimeMicros, const char* loopName, bool debugEnabled);
     void SetupMicros(uint32_t loopTime);
     void SetupMicros(uint32_t loopTime, const char* loopName);
     void SetupMicros(uint32_t loopTime, const char* loopName, bool debugEnabled);
@@ -24,6 +21,7 @@ class TimedLoop {
 	void SetupFrequency(float frequency);
 	void SetupFrequency(float frequency, const char* loopName);
 	void SetupFrequency(float frequency, const char* loopName, bool debugEnabled);
+	void UpdateFrequency(float frequency);
 	
 	void SetDebugCallback(void (*)(char *));
 

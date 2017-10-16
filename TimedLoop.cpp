@@ -1,6 +1,6 @@
 #include "TimedLoop.h"
 
-void TimedLoop::Setup(uint32_t loopTimeMicros, const char* loopName, bool debugEnabled)
+void TimedLoop::SetupMicros(uint32_t loopTimeMicros, const char* loopName, bool debugEnabled)
 {
   time = loopTimeMicros;
   name = loopName;
@@ -8,50 +8,43 @@ void TimedLoop::Setup(uint32_t loopTimeMicros, const char* loopName, bool debugE
   timer = micros();
 }
 
-void TimedLoop::Setup(uint32_t loopTimeMicros, const char* loopName)
+void TimedLoop::SetupMicros(uint32_t loopTimeMicros, const char* loopName)
 {
-  Setup(loopTimeMicros, loopName, false);
+  SetupMicros(loopTimeMicros, loopName, false);
 }
 
-void TimedLoop::Setup(uint32_t loopTimeMicros)
+void TimedLoop::SetupMicros(uint32_t loopTimeMicros)
 {
-  Setup(loopTimeMicros, "Unnamed Loop", false);
-}
-
-void TimedLoop::SetupMicros(uint32_t loopTime, const char* loopName, bool debugEnabled){
-  Setup(loopTime, loopName, debugEnabled);
-}
-
-void TimedLoop::SetupMicros(uint32_t loopTime, const char* loopName){
-  Setup(loopTime, loopName);
-}
-
-void TimedLoop::SetupMicros(uint32_t loopTime){
-  Setup(loopTime);
+  SetupMicros(loopTimeMicros, "Unnamed Loop", false);
 }
 
 void TimedLoop::SetupMillis(uint32_t loopTime, const char* loopName, bool debugEnabled){
-  Setup(loopTime * 1000, loopName, debugEnabled);
+  SetupMicros(loopTime * 1000, loopName, debugEnabled);
 }
 
 void TimedLoop::SetupMillis(uint32_t loopTime, const char* loopName){
-  Setup(loopTime * 1000, loopName);
+  SetupMicros(loopTime * 1000, loopName);
 }
 
 void TimedLoop::SetupMillis(uint32_t loopTime){
-  Setup(loopTime * 1000);
+  SetupMicros(loopTime * 1000);
 }
 
 void TimedLoop::SetupFrequency(float frequency, const char* loopName, bool debugEnabled){
-  Setup(1000000/frequency, loopName, debugEnabled);
+  SetupMicros(1000000/frequency, loopName, debugEnabled);
 }
 
 void TimedLoop::SetupFrequency(float frequency, const char* loopName){
-  Setup(1000000/frequency, loopName);
+  SetupMicros(1000000/frequency, loopName);
 }
 
 void TimedLoop::SetupFrequency(float frequency){
-  Setup(1000000/frequency);
+  SetupMicros(1000000/frequency);
+}
+
+void TimedLoop::UpdateFrequency(float frequency){
+  time = (uint32_t)(1000000/frequency);
+  timer = micros();
 }
 
 void TimedLoop::SetDebugCallback(void (*debugCallback)(char *)){
